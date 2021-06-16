@@ -36,7 +36,10 @@ Route::post('/login', function (Request $request) {
 
 })->name('submitLogin');
 
-Route::prefix('admin')->group(function () {
+Route::get('register', [AuthController::class,'showFormRegister'])->name('auth.showFormRegister');
+Route::post('register', [AuthController::class,'register'])->name('auth.register')->middleware('checkAge');
+
+Route::middleware('auth')->prefix('admin')->group(function () {
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('users.index');
         Route::get('/create', [UserController::class, 'create'])->name('users.create');
