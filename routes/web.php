@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('admin.dashboard');
 })->name('home');
 
 Route::get('/login', [AuthController::class, 'showFormLogin'])->name('auth.showFormLogin');
@@ -39,7 +39,12 @@ Route::post('/login', function (Request $request) {
 Route::get('register', [AuthController::class,'showFormRegister'])->name('auth.showFormRegister');
 Route::post('register', [AuthController::class,'register'])->name('auth.register')->middleware('checkAge');
 
-Route::middleware('auth')->prefix('admin')->group(function () {
+Route::prefix('admin')->group(function () {
+
+    Route::get('dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('users.index');
         Route::get('/create', [UserController::class, 'create'])->name('users.create');

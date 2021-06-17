@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\View\Components\Alert;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $menu = ['Home', 'About', 'Contact'];
+        View::share('menu', $menu);
+        Blade::component('alert', Alert::class);
     }
 }

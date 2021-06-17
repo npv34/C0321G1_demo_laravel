@@ -29,7 +29,8 @@ class UserController extends Controller
                 "email" => "nam@gmail.com"
             ]
         ];
-        return view('users.list', compact('users'));
+        $message = 'xin chao cac ban';
+        return view('users.list', compact('users', 'message'));
     }
 
     function create(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application

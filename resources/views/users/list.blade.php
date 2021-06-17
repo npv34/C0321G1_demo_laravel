@@ -1,6 +1,6 @@
-@extends('welcome')
+@extends('admin.master')
 @section('content')
-
+    <x-alert :message="$message" type="success"/>
     <div class="card mt-2">
         <div class="card-header">
             <div class="row">
