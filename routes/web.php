@@ -52,6 +52,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/{id}/detail', [UserController::class, 'show'])->name('users.show');
         Route::get('/{id?}/update', [UserController::class, 'update'])->name('users.update');
         Route::get('/search', [UserController::class, 'search'])->name('users.search');
+        Route::get('/{id}/delete', [UserController::class, 'delete'])->name('users.delete');
     });
 });
 

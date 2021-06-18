@@ -1,6 +1,11 @@
 @extends('admin.master')
 @section('content')
-    <x-alert :message="$message" type="success"/>
+
+    @if(session()->has('delete-success'))
+        <div class="alert alert-success" role="alert">
+            {{ session()->get('delete-success') }}
+        </div>
+    @endif
     <div class="card mt-2">
         <div class="card-header">
             <div class="row">
@@ -20,11 +25,11 @@
 
         </div>
         <div class="card-body">
+            <a href="{{ route('users.create') }}" class="btn btn-success mb-2">Them moi</a>
             <table class="table">
                 <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Username</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th></th>
@@ -34,11 +39,13 @@
                 @forelse($users as $key => $user)
                     <tr>
                         <th scope="row">{{ $key + 1 }}</th>
-                        <td><a href="{{ route('users.show', $user['id']) }}">{{ $user['username'] }}</a></td>
-                        <td>{{ $user['name'] }}</td>
-                        <td>{{ $user['email'] }}</td>
-                        <td><a href="{{ route('users.update', ['id' => $user['id']]) }}"
-                               class="btn btn-primary">Chỉnh sửa</a></td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td><a href="{{ route('users.update', ['id' => $user->id]) }}"
+                               class="btn btn-primary">Chỉnh sửa</a>
+                            <a onclick="return confirm('Are you sure?')"
+                               href="{{ route('users.delete', ['id' => $user->id]) }}"
+                               class="btn btn-danger">Xoa</a></td>
                     </tr>
                 @empty
                     <tr>
