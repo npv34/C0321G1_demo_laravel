@@ -24,7 +24,7 @@ class UserService
         $user = new User();
         $user->fill($request->all());
         $user->password = Hash::make($request->password);
-        $this->userRepo->store($user);
+        $this->userRepo->store($user, $request->role_id);
     }
 
     public function getById($id) {

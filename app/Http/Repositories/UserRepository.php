@@ -5,6 +5,7 @@ namespace App\Http\Repositories;
 
 
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class UserRepository
 {
@@ -17,11 +18,19 @@ class UserRepository
 
     public function getAll(): \Illuminate\Database\Eloquent\Collection|array
     {
-        return $this->userModel->all();
+        return $this->userModel->with('group', 'roles')->get();
     }
 
-    function store($obj) {
-        $obj->save();
+    function store($user, $rolesId) {
+        DB::beginTransaction();
+        try {
+            $user->save();
+            $user->roles()->sync($rolesId);
+            DB::commit();
+        }catch (\Exception $e) {
+            DB::rollBack();
+        }
+
     }
 
     function getById($id) {
@@ -29,6 +38,7 @@ class UserRepository
     }
 
     function destroy($user) {
+        $user->roles()->detach();
         $user->delete();
     }
 }

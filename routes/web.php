@@ -36,8 +36,8 @@ Route::post('/login', function (Request $request) {
 
 })->name('submitLogin');
 
-Route::get('register', [AuthController::class,'showFormRegister'])->name('auth.showFormRegister');
-Route::post('register', [AuthController::class,'register'])->name('auth.register')->middleware('checkAge');
+Route::get('register', [AuthController::class, 'showFormRegister'])->name('auth.showFormRegister');
+Route::post('register', [AuthController::class, 'register'])->name('auth.register')->middleware('checkAge');
 
 Route::prefix('admin')->group(function () {
 
@@ -53,6 +53,11 @@ Route::prefix('admin')->group(function () {
         Route::get('/{id?}/update', [UserController::class, 'update'])->name('users.update');
         Route::get('/search', [UserController::class, 'search'])->name('users.search');
         Route::get('/{id}/delete', [UserController::class, 'delete'])->name('users.delete');
+    });
+
+    Route::prefix('groups')->group(function () {
+        Route::get('/{id}/users', [\App\Http\Controllers\GroupController::class, 'getUsers'])->name('groups.getUsers');
+        Route::get('/{id}/delete', [\App\Http\Controllers\GroupController::class, 'destroy'])->name('groups.destroy');
     });
 });
 

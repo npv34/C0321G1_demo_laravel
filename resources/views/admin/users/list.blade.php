@@ -32,6 +32,8 @@
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Group</th>
+                    <th scope="col">Role</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -41,6 +43,21 @@
                         <th scope="row">{{ $key + 1 }}</th>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
+                        @if($user->group)
+                            <td>
+                                <a href="{{ route('groups.getUsers', $user->group_id) }}">{{ $user->group->name }}</a>
+                            </td>
+                        @else
+                            <td>Chua phan lop</td>
+                        @endif
+                        <td>
+                            @forelse($user->roles as $role)
+                                <p>{{ $role->name }}</p>
+                            @empty
+                                Chua phan quyen
+                            @endforelse
+                        </td>
+
                         <td><a href="{{ route('users.update', ['id' => $user->id]) }}"
                                class="btn btn-primary">Chỉnh sửa</a>
                             <a onclick="return confirm('Are you sure?')"
