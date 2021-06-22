@@ -21,24 +21,35 @@ class UserRepository
         return $this->userModel->with('group', 'roles')->get();
     }
 
-    function store($user, $rolesId) {
+    function store($user, $rolesId)
+    {
         DB::beginTransaction();
         try {
             $user->save();
             $user->roles()->sync($rolesId);
             DB::commit();
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
         }
 
     }
 
-    function getById($id) {
+    function getById($id)
+    {
         return $this->userModel->findOrFail($id);
     }
 
-    function destroy($user) {
-        $user->roles()->detach();
-        $user->delete();
+    function destroy($user)
+    {
+        DB::beginTransaction();
+        try {
+            $user->roles()->detach();
+            $user->delete();
+            DB::commit();
+            toastr()->success('Delete success');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            toastr()->error('Delete error');
+        }
     }
 }

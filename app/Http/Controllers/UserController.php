@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateUserRequest;
 use App\Http\Services\UserService;
 use App\Models\Group;
 use App\Models\Role;
@@ -43,7 +44,7 @@ class UserController extends Controller
         echo $request->keyword;
     }
 
-    function store(Request $request): \Illuminate\Http\RedirectResponse
+    function store(CreateUserRequest $request): \Illuminate\Http\RedirectResponse
     {
         $this->userService->create($request);
         return redirect()->route('users.index');
@@ -51,8 +52,6 @@ class UserController extends Controller
 
     function delete($id) {
         $this->userService->delete($id);
-        $message = 'Xoa thanh cong';
-        session()->flash('delete-success', $message);
         return redirect()->route('users.index');
     }
 }

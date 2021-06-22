@@ -12,6 +12,7 @@ class GroupController extends Controller
     {
         $group = Group::findOrFail($idGroup);
         $users = $group->users;
+
     }
 
     function destroy($idGroup)
@@ -27,6 +28,5 @@ class GroupController extends Controller
             DB::rollBack();
             echo $e->getMessage();
         }
-
     }
 }

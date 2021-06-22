@@ -1,11 +1,5 @@
 @extends('admin.master')
 @section('content')
-
-    @if(session()->has('delete-success'))
-        <div class="alert alert-success" role="alert">
-            {{ session()->get('delete-success') }}
-        </div>
-    @endif
     <div class="card mt-2">
         <div class="card-header">
             <div class="row">

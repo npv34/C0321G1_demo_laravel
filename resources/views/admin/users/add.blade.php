@@ -10,15 +10,21 @@
                 @csrf
                 <div class="form-group">
                     <label>Name</label>
-                    <input name="name" type="text" class="form-control">
+                    <input name="name" type="text" value="{{ old('name') }}" class="form-control  @error('name') is-invalid @enderror">
+                    @error('name')
+                    <p class="text-danger">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label>Email</label>
-                    <input name="email" type="email" class="form-control">
+                    <input name="email" value="{{ old('email') }}" type="text" class="form-control @error('email') is-invalid @enderror">
+                    @error('email')
+                    <p class="text-danger">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label>Address</label>
-                    <textarea class="form-control" name="address" id="" cols="3" rows="3"></textarea>
+                    <textarea class="form-control" name="address" id="" cols="3" rows="3">{{ old('address') }}</textarea>
                 </div>
                 <div class="form-group">
                     <label>Group</label>
@@ -31,7 +37,6 @@
                 <div class="form-group">
                     <div class="row">
                         <label class="col-12 col-md-2">Role</label>
-
                         <div class="form-check col-12 col-md-10">
                             @foreach($roles as $role)
                                 <div class="col-12">
@@ -48,7 +53,8 @@
 
                 <div class="form-group">
                     <label>Password</label>
-                    <input name="password" type="password" class="form-control">
+                    <input name="password" id="password" type="password" class="form-control">
+                    <p id="message-password"></p>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
