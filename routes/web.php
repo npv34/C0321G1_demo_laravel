@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WeatherController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -56,8 +58,12 @@ Route::prefix('admin')->group(function () {
     });
 
     Route::prefix('groups')->group(function () {
-        Route::get('/{id}/users', [\App\Http\Controllers\GroupController::class, 'getUsers'])->name('groups.getUsers');
-        Route::get('/{id}/delete', [\App\Http\Controllers\GroupController::class, 'destroy'])->name('groups.destroy');
+        Route::get('/{id}/users', [GroupController::class, 'getUsers'])->name('groups.getUsers');
+        Route::get('/{id}/delete', [GroupController::class, 'destroy'])->name('groups.destroy');
+    });
+
+    Route::prefix('weather')->group(function (){
+        Route::get('/current', [WeatherController::class, 'getCurrentWeather'])->name('weather.getCurrentWeather');
     });
 });
 

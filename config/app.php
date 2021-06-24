@@ -230,4 +230,9 @@ return [
 
     ],
 
+    /*
+     * key openweather service
+     */
+
+    'open_weather_key' => env('WEATHER_KEY')
 ];
