@@ -6,31 +6,29 @@
             Featured
         </div>
         <div class="card-body">
-            <form method="post" action="{{ route('users.store') }}">
+            <form method="post" action="{{ route('users.edit', $user->id) }}">
                 @csrf
                 <div class="form-group">
                     <label>Name</label>
-                    <input name="name" type="text" value="{{ old('name') }}" class="form-control  @error('name') is-invalid @enderror">
+                    <input name="name" type="text" value="{{ $user->name }}" class="form-control  @error('name') is-invalid @enderror">
                     @error('name')
                     <p class="text-danger">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label>Email</label>
-                    <input name="email" value="{{ old('email') }}" type="text" class="form-control @error('email') is-invalid @enderror">
-                    @error('email')
-                    <p class="text-danger">{{ $message }}</p>
-                    @enderror
+                    <input disabled value="{{ $user->email }}" type="text" class="form-control">
                 </div>
                 <div class="form-group">
                     <label>Address</label>
-                    <textarea class="form-control" name="address" id="" cols="3" rows="3">{{ old('address') }}</textarea>
+                    <textarea class="form-control" name="address" id="" cols="3" rows="3">{{ $user->address }}</textarea>
                 </div>
                 <div class="form-group">
                     <label>Group</label>
                     <select name="group_id" class="form-control">
+                        <option>Khong phan lop</option>
                         @foreach($groups as $group)
-                            <option value="{{ $group->id }}">{{ $group->name }}</option>
+                            <option @if($user->checkGroup($group->id)) selected @endif value="{{ $group->id }}">{{ $group->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -41,25 +39,12 @@
                             @foreach($roles as $role)
                                 <div class="col-12">
                                     <label class="form-check-label">
-                                        <input type="checkbox" class="form-check-input" name="role_id[{{ $role->id }}]" value="{{ $role->id }}">{{ $role->name }}
+                                        <input @if($user->checkRole($role->id)) checked @endif type="checkbox" class="form-check-input" name="role_id[{{ $role->id }}]" value="{{ $role->id }}">{{ $role->name }}
                                     </label>
                                 </div>
                             @endforeach
                         </div>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Password</label>
-                    <div class="input-group mb-2">
-                        <div class="input-group-prepend">
-                            <div id="show-password" class="input-group-text">
-                                <i id="icon-eye" class="fas fa-eye-slash"></i>
-                            </div>
-                        </div>
-                        <input  type="password" id="password" name="password" class="form-control" >
-                    </div>
-                    <p id="message-password"></p>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

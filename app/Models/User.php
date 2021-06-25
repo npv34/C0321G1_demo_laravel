@@ -54,4 +54,22 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class, 'user_role');
     }
+
+    function checkRole($roleId): bool
+    {
+        foreach ($this->roles as $role) {
+            if ($role->id == $roleId) {
+                return true;
+            }
+        }
+
+        return  false;
+    }
+
+    function checkGroup($groupId) {
+        if ($this->group) {
+            return $this->group->id == $groupId;
+        }
+        return false;
+    }
 }
