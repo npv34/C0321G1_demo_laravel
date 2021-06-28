@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    let origin = window.origin;
     $('#password').keyup(function () {
         let value = $(this).val();
         let content = '';
@@ -35,7 +36,7 @@ $(document).ready(function () {
     $('#search-user').keyup(function () {
         let value = $(this).val();
         if (value) {
-            let origin = window.origin;
+
             // goi ajax
             $.ajax({
                 url: origin + '/admin/users/search',
@@ -48,7 +49,7 @@ $(document).ready(function () {
                     let users = res.data;
                     let html = '';
                     $.each(users, function (index, item) {
-                        html += '<li class="list-group-item">';
+                        html += '<li data-id="'+item.id+'" class="list-group-item list-group-item-action item-user">';
                         html += item.name;
                         html += '</li>';
                     });
@@ -63,6 +64,16 @@ $(document).ready(function () {
         } else {
             $('#list-user-search').html('');
         }
-    })
+    });
 
+    $('body').on('click', '.item-user', function (){
+        let id = $(this).attr('data-id');
+        $.ajax({
+            url: origin + '/admin/users/' + id + '/detail',
+            method: 'GET',
+            success: function (res) {
+
+            }
+        })
+    })
 })

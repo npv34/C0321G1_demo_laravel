@@ -4,7 +4,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-12 col-md-4">
-                    <p>Danh sách người dùng</p></div>
+                    <p>@lang('message.user_list')</p></div>
                 <div class="col-12 col-md-8">
                         <div class="form-group">
                             <input type="text" id="search-user" name="keyword" class="form-control col-12 col-md-8">
@@ -15,7 +15,7 @@
 
         </div>
         <div class="card-body">
-            <a href="{{ route('users.create') }}" class="btn btn-success mb-2">Them moi</a>
+            <a href="{{ route('users.create') }}" class="btn btn-success mb-2">{{ __('message.add') }}</a>
             <table class="table">
                 <thead class="thead-light">
                 <tr>
@@ -27,7 +27,7 @@
                     <th></th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="list-user">
                 @forelse($users as $key => $user)
                     <tr>
                         <th scope="row">{{ $key + 1 }}</th>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\LangController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WeatherController;
 use Illuminate\Http\Request;
@@ -41,7 +42,7 @@ Route::post('/login', function (Request $request) {
 Route::get('register', [AuthController::class, 'showFormRegister'])->name('auth.showFormRegister');
 Route::post('register', [AuthController::class, 'register'])->name('auth.register')->middleware('checkAge');
 
-Route::prefix('admin')->group(function () {
+Route::middleware('setLocale')->prefix('admin')->group(function () {
 
     Route::get('dashboard', function () {
         return view('admin.dashboard');
@@ -66,6 +67,8 @@ Route::prefix('admin')->group(function () {
     Route::prefix('weather')->group(function (){
         Route::get('/current', [WeatherController::class, 'getCurrentWeather'])->name('weather.getCurrentWeather');
     });
+
+    Route::post('language', [LangController::class, 'setLocale'])->name('lang.setLocale');
 });
 
 

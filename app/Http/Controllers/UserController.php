@@ -44,7 +44,8 @@ class UserController extends Controller
 
     function show($id)
     {
-        echo "show";
+        $user = User::with('group','roles')->findOrFail($id);
+        return response()->json($user);
     }
 
     function search(Request $request)
