@@ -6,14 +6,10 @@
                 <div class="col-12 col-md-4">
                     <p>Danh sách người dùng</p></div>
                 <div class="col-12 col-md-8">
-                    <form action="{{ route('users.search') }}">
-                        @csrf
-                        <div class="form-group row">
-                            <input type="text" name="keyword" class="form-control col-12 col-md-8">
-                            <button type="submit" class="btn btn-success ml-2">Tìm kiếm</button>
+                        <div class="form-group">
+                            <input type="text" id="search-user" name="keyword" class="form-control col-12 col-md-8">
+                            <ul class="list-group col-12 col-md-8" style="position: absolute" id="list-user-search"></ul>
                         </div>
-
-                    </form>
                 </div>
             </div>
 

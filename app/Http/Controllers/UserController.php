@@ -49,7 +49,17 @@ class UserController extends Controller
 
     function search(Request $request)
     {
-        echo $request->keyword;
+        // code chuc nangg search
+        $keyword = $request->keyword;
+        $users = User::with('group', 'roles')
+            ->where('name', 'LIKE', '%' . $keyword . '%')
+            ->get();
+        $data = [
+            "status" => "success",
+            "data" => $users
+        ];
+
+        return response()->json($data);
     }
 
     function store(CreateUserRequest $request): \Illuminate\Http\RedirectResponse
