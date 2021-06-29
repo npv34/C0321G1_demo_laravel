@@ -25,24 +25,12 @@ Route::get('/', function () {
 
 Route::get('/login', [AuthController::class, 'showFormLogin'])->name('auth.showFormLogin');
 
-Route::post('/login', function (Request $request) {
-
-    $email = $request->email;
-    $password = $request->password;
-
-    if ($email == 'admin@gmail.com' && $password == '123456') {
-        echo "Login thanh cong";
-        return redirect()->route('home');
-    } else {
-        return redirect()->route('login');
-    }
-
-})->name('submitLogin');
+Route::post('/login', [AuthController::class,'login'])->name('submitLogin');
 
 Route::get('register', [AuthController::class, 'showFormRegister'])->name('auth.showFormRegister');
 Route::post('register', [AuthController::class, 'register'])->name('auth.register')->middleware('checkAge');
 
-Route::middleware('setLocale')->prefix('admin')->group(function () {
+Route::middleware(['auth', 'setLocale'])->prefix('admin')->group(function () {
 
     Route::get('dashboard', function () {
         return view('admin.dashboard');
@@ -69,6 +57,8 @@ Route::middleware('setLocale')->prefix('admin')->group(function () {
     });
 
     Route::post('language', [LangController::class, 'setLocale'])->name('lang.setLocale');
+
+    Route::get('logout',[AuthController::class,'logout'])->name('auth.logout');
 });
 
 

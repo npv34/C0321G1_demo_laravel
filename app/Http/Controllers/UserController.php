@@ -8,7 +8,9 @@ use App\Models\Group;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -29,6 +31,7 @@ class UserController extends Controller
 
     function create(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
+        $this->isPermission('manage-user');
         $groups = Group::all();
         $roles = Role::all();
         return view('admin.users.add', compact('groups', 'roles'));
@@ -36,6 +39,7 @@ class UserController extends Controller
 
     function update($id)
     {
+        $this->isPermission('manage-user');
         $user = User::findOrFail($id);
         $groups = Group::all();
         $roles = Role::all();
@@ -44,7 +48,7 @@ class UserController extends Controller
 
     function show($id)
     {
-        $user = User::with('group','roles')->findOrFail($id);
+        $user = User::with('group', 'roles')->findOrFail($id);
         return response()->json($user);
     }
 
