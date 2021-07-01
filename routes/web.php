@@ -48,6 +48,8 @@ Route::middleware(['auth', 'setLocale'])->prefix('admin')->group(function () {
     });
 
     Route::prefix('groups')->group(function () {
+        Route::get('/', [GroupController::class, 'index'])->name('groups.index');
+
         Route::get('/{id}/users', [GroupController::class, 'getUsers'])->name('groups.getUsers');
         Route::get('/{id}/delete', [GroupController::class, 'destroy'])->name('groups.destroy');
     });

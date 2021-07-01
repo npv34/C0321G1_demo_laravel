@@ -29,4 +29,8 @@ class GroupController extends Controller
             echo $e->getMessage();
         }
     }
+
+    function index() {
+        return view('admin.groups.list');
+    }
 }
