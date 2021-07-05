@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route('admin.dashboard');
+    echo 1;
 })->name('home');
 
 Route::get('/login', [AuthController::class, 'showFormLogin'])->name('auth.showFormLogin');
